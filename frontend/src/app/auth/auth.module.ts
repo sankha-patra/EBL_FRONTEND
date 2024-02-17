@@ -1,37 +1,27 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { EffectsModule } from "@ngrx/effects";
+import { CommonModule } from "@angular/common";
+ 
+import { AuthRoutingModule } from "./auth-routing.module";
+
+import { AuthComponent } from "./auth.component";
 import { StoreModule } from "@ngrx/store";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { environment } from "src/environments/environment";
-// import { AppRoutingModule } from "./app-routing.module";
-// import { AppComponent } from "./app.component";
-// import { AuthInterceptor } from "./auth.interceptors";
-import { AppRoutingModule } from "../app-routing.module";
-import { AppComponent } from "../app.component";
-import { AuthInterceptor } from "../auth.interceptors";
-// import { NavBarComponent } from "./navbar/navbar.component"; // Correct the case here
+import { LoginComponent } from "./components/login/login.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { EffectsModule } from "@ngrx/effects";
+import { HttpClientModule } from "@angular/common/http";
+import { UserComponent } from './components/user/user.component';
+import { LogoutComponent } from './components/logout/logout.component';
+ 
 @NgModule({
-  declarations: [AppComponent], // Correct the case here
+  declarations: [AuthComponent, LoginComponent, UserComponent, LogoutComponent],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
+    CommonModule,
+    AuthRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-    }),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent],
+  exports: [
+    LogoutComponent
+  ]
 })
-export class AppModule {}
+export class AuthModule {}
